@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Para Mimi</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+    .card {
+      background: white;
+      width: 90%;
+      max-width: 480px;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-6px); }
+    }
+
+    .card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #ff4d88;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover { background: #e63b74; }
+
+    .hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: fall 4s linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10%); opacity:1; }
+      100% { transform: translateY(110%); opacity:0; }
+    }
+
+    .dark-mode { background:#1a1a1a; color:white; }
+    .dark-mode .card { background:#2a2a2a; }
+  </style>
+</head>
+
+<body>
+
+  <div class="card" id="previewCard">
+    <img id="profileImg" src="imagenes/D611C370-FF44-4AD5-9316-4DF4A44BD438.jpg" alt="" />
+    <h2 id="nameText">Para Mimi</h2>
+    <p id="messageText">Espero que te guste, lo hice con mucho cariño para vos ❤️</p>
+  </div>
+
+  <!-- RAMO -->
+  <div id="bouquetWrapper" style="display:flex;flex-direction:column;align-items:center;margin-top:10px;">
+    <div id="bouquetContainer" style="width:220px;height:260px;"></div>
+
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+      <button onclick="renderBouquet('real_mitad')">Mitad</button>
+      <button onclick="renderBouquet('real_rosa')">Rosa</button>
+      <button onclick="renderBouquet('real_negro')">Negra</button>
+    </div>
+  </div>
+
+  <button onclick="toggleDarkMode()" style="margin-top:20px;">Modo Oscuro</button>
+
+  <div class="hearts" id="hearts"></div>
+
+<script>
+
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+  }
+
+  function spawnHearts() {
+    const hearts = document.getElementById('hearts');
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.style.left = Math.random()*100 + '%';
+    h.style.animationDuration = 3 + Math.random()*3 + 's';
+    h.innerHTML = '💖';
+    hearts.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+  }
+  setInterval(spawnHearts, 500);
+
+  /* ------------------------------
+        MOSTRAR IMÁGENES DE RAMOS
+  ------------------------------ */
+  function showBouquetImage(path) {
+    document.getElementById('bouquetContainer').innerHTML = `
+      <img src="${path}" 
+           style="width:220px;height:260px;object-fit:cover;border-radius:8px;
+                  box-shadow:0 6px 18px rgba(0,0,0,0.25);" />
+    `;
+  }
+
+  /* ------------------------------
+        SOLO USAMOS IMÁGENES
+  ------------------------------ */ 
+  function renderBouquet(style) {
+
+    if (style === 'real_rosa')
+      return showBouquetImage('imagenes/ramo_rosa.png');
+
+    if (style === 'real_negro')
+      return showBouquetImage('imagenes/ramo_negro.png');
+
+    if (style === 'real_mitad')
+      return showBouquetImage('imagenes/ramo_mitad.png');
+  }
+
+  // ramo inicial
+  showBouquetImage('imagenes/ramo_rosa.png');
+  
+
+</script>
+
+<!-- 📌 SECCIÓN EXTRA PARA FUTURO CONTENIDO -->
+<div id="extra-section" style="
+  margin-top: 40px;
+  padding: 20px;
+  width: 90%;
+  max-width: 480px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+">
+  <h2>Aca voy a seguir escribiendo cosas que nos pasen askjkas </h2>
+  <p>Pd:la mejor juntada de todas con el choker (chispa).</p>
+
+  
+  <!-- Para agregar fotos, solo pegá más <img> acá abajo -->
+   <img src="imagenes/IMG_2927.jpg" style="max-width:200px;border-radius:10px;margin:10px 0;">
+  <!-- <img src="foto1.jpg" style="max-width:200px;border-radius:10px;margin:10px 0;"> -->
+</div>
+
+</body>
+</html>
